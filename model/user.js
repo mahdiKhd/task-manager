@@ -6,6 +6,15 @@ const passwordValidator = function(value) {
 };
 
 const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: false,
+    },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        required: true,
+    },
     phoneNumber: {
         type: String,
         required: true,
@@ -23,10 +32,6 @@ const userSchema = new mongoose.Schema({
             validator: passwordValidator,
             message: 'Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, and one digit.',
         }
-    },
-    username: {
-        type: String,
-        required: false,
     },
     signupDate: {
         type: Date,

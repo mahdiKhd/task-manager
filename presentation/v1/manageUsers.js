@@ -5,10 +5,12 @@ const verifyToken = require('../middleware/jwtAuthentication');
 function manageUsersExpress(app){
 
     // get all users
-    app.get("/v1/user/manageUsers/getAllUsers", verifyToken, async function (req, res) {
+    app.get("/v1/user/manageUsers/getAllUsers/:page/:limit", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
-            const users = await UserHandler.getAllUsers();
+            const {page, limit} = req.params;
+            const users = await UserHandler.getAllUsers(userId, page, limit);
+            // todo add DTO
             res.json({
                 result: "OK",
                 users,
@@ -38,13 +40,14 @@ function manageUsersExpress(app){
         }
     });
     // delete user (admin only)
-    app.get("/v1/user/manageUsers/deleteUser", verifyToken, async function (req, res) {
+    app.delete("/v1/user/manageUsers/deleteUser", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
             const {username} = req.body;
-            const users = await UserHandler.deleteUser(username);
+            const message = await UserHandler.deleteUser(userId, username);
             res.json({
                 result: "OK",
+                message,
             });
         } catch (error) {
             res.json({
@@ -55,13 +58,14 @@ function manageUsersExpress(app){
     });
 
     // assign role (admin only)
-    app.post("/v1/user/manageUsers/assignRole", verifyToken, async function (req, res) {
+    app.post("/v1/user/manageUsers/assignRoleAdmin", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
-            const {username, role} = req.body;
-            await UserHandler.assignRole(userId, username, role);
+            const {username} = req.body;
+            const message = await UserHandler.assignRoleAdmin(userId, username);
             res.json({
                 result: "OK",
+                message,
             });
         } catch (error) {
             res.json({

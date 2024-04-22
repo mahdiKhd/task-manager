@@ -28,19 +28,20 @@ class UserHandler {
     }
 
     // manage users
-    static async getAllUsers() {
+    static async getAllUsers(userId, page, limit) {
+        return await manageUsersDomain.getAllUsers(userId, page, limit);
     }
 
     static async editAllUsers() {
-
+        //todo
     }
 
-    static async deleteUser() {
-
+    static async deleteUser(userId, username) {
+        return await manageUsersDomain.deleteUser(userId, username);
     }
 
-    static async assignRole(userId, userId2, role) {
-
+    static async assignRoleAdmin(userId, username) {
+        return await manageUsersDomain.assignRoleAdmin(userId, username);
     }
 
     // profile

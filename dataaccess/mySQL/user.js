@@ -85,6 +85,22 @@ class UserDataAccess {
             throw error;
         }
     }
+
+    static async deleteUser(username){
+        const sql = "DELETE FROM users WHERE username = ?;";
+
+        try {
+            const [result] = await promisePool.query(sql, [username]);
+
+            if (result.affectedRows > 0) {
+                return `User '${username}' deleted successfully`;
+            } else {
+                return `User '${username}' not found`;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = UserDataAccess;

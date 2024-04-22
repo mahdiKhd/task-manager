@@ -40,13 +40,14 @@ function manageUsersExpress(app){
         }
     });
     // delete user (admin only)
-    app.get("/v1/user/manageUsers/deleteUser", verifyToken, async function (req, res) {
+    app.delete("/v1/user/manageUsers/deleteUser", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
             const {username} = req.body;
-            const users = await UserHandler.deleteUser(username);
+            const message = await UserHandler.deleteUser(userId, username);
             res.json({
                 result: "OK",
+                message,
             });
         } catch (error) {
             res.json({

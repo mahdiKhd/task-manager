@@ -33,11 +33,11 @@ class UserHandler {
     }
 
     static async editAllUsers() {
-
+        //todo
     }
 
-    static async deleteUser() {
-
+    static async deleteUser(userId, username) {
+        return await manageUsersDomain.deleteUser(userId, username);
     }
 
     static async assignRole(userId, userId2, role) {

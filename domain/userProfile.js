@@ -36,13 +36,6 @@ class UserProfile {
         return message;
     }
 
-    static removeUndefinedFields(obj) {
-        // Filter out key-value pairs where the value is not undefined
-        const filteredEntries = Object.entries(obj).filter(([key, value]) => value !== undefined);
-
-        // Convert the filtered entries back to an object
-        return Object.fromEntries(filteredEntries);
-    }
 }
 
 module.exports = UserProfile;

@@ -5,10 +5,12 @@ const verifyToken = require('../middleware/jwtAuthentication');
 function manageUsersExpress(app){
 
     // get all users
-    app.get("/v1/user/manageUsers/getAllUsers", verifyToken, async function (req, res) {
+    app.get("/v1/user/manageUsers/getAllUsers/:page/:limit", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
-            const users = await UserHandler.getAllUsers();
+            const {page, limit} = req.params;
+            const users = await UserHandler.getAllUsers(userId, page, limit);
+            // todo add DTO
             res.json({
                 result: "OK",
                 users,

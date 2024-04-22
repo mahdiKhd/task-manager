@@ -28,7 +28,8 @@ class UserHandler {
     }
 
     // manage users
-    static async getAllUsers() {
+    static async getAllUsers(userId, page, limit) {
+        return await manageUsersDomain.getAllUsers(userId, page, limit);
     }
 
     static async editAllUsers() {

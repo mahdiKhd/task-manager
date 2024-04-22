@@ -6,4 +6,5 @@ module.exports = {
     INVALID_OPS: 'عملیات اشتباه است',
     USER_EXISTS: 'کاربر با این مشخصات وجود دارد',
     INVALID_LOGIN: 'ورود نا معتبر',
+    ACCESS_DENIED: 'دسترسی نا معتبر'
 }

@@ -7,7 +7,6 @@ class UserDataAccess {
             const query = 'SELECT * FROM users WHERE user_id = ?';
             const results = await promisePool.query(query, [id]);
 
-            console.log(results)
             if (results[0].length === 0) {
                 return null; // User not found
             }
@@ -64,12 +63,26 @@ class UserDataAccess {
     static async insertNewUser(email, phoneNumber, username, password){
         const sql = "INSERT INTO users (email, phone_number, username, password, role) VALUES (?, ?, ?, ?, ?);";
         try {
-            const [result] = await promisePool.execute(sql, [email, phoneNumber, username, password, 'user']);
-            console.log(result);
-            return { success: true, message: "User added successfully", userId: result.insertId };
+            await promisePool.execute(sql, [email, phoneNumber, username, password, 'user']);
         } catch (error) {
-            console.error("Error adding user:", error.message);
-            return { success: false, message: error.message };
+            throw error;
+        }
+    }
+
+    static async getAllUsers(page, limit){
+        page = parseInt(page, 10);
+        limit = parseInt(limit, 10);
+        const offset = (page - 1) * limit; // Calculate offset
+
+        // SQL query to get users with limit and offset
+        const sql = "SELECT user_id, email, phone_number, username, role FROM users ORDER BY username ASC LIMIT ? OFFSET ?;";
+
+        try {
+            // Use pool to execute the query
+            const [users] = await promisePool.query(sql, [limit, offset]);
+            return users;
+        } catch (error) {
+            throw error;
         }
     }
 }

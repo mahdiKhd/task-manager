@@ -28,6 +28,20 @@ class TaskDataAccess {
         }
     }
 
+    static async getAllTasks(page, limit){
+        page = parseInt(page, 10);
+        limit = parseInt(limit, 10);
+        const offset = (page - 1) * limit;
+
+        const sql = "SELECT * FROM tasks ORDER BY task_id ASC LIMIT ? OFFSET ?;"
+        try {
+            const [result] = await promisePool.query(sql, [limit, offset]);
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     static async editTaskName(taskId, name){
         const sql = "UPDATE tasks SET name = ? WHERE task_id = ?;";
 

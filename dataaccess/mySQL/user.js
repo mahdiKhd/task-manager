@@ -73,7 +73,7 @@ class UserDataAccess {
     static async getAllUsers(page, limit){
         page = parseInt(page, 10);
         limit = parseInt(limit, 10);
-        const offset = (page - 1) * limit; // Calculate offset
+        const offset = (page - 1) * limit;
 
         // SQL query to get users with limit and offset
         const sql = "SELECT user_id, email, phone_number, username, role FROM users ORDER BY username ASC LIMIT ? OFFSET ?;";

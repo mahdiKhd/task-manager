@@ -24,8 +24,8 @@ class TaskHandler {
         return await taskDomain.getTask(userId, taskId);
     }
 
-    static async getAllTask(userId) {
-
+    static async getAllTasks(userId, page, limit) {
+        return await taskDomain.getAllTasks(userId, page, limit);
     }
 }
 module.exports = {TaskHandler};

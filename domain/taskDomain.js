@@ -49,6 +49,19 @@ class Task {
         return await taskDataAccess.getTaskById(taskId);
     }
 
+    static async getAllTasks(userId, page, limit) {
+        // check user
+        const userById = await userDataAccess.getUserById(userId);
+        if (!userById || userById.role !== 'admin') {
+            const error = new Error();
+            error.message = errorCodes.INVALID_OPS;
+            throw error;
+        }
+
+        // get all tasks
+        return await taskDataAccess.getAllTasks(page, limit);
+    }
+
     static async checkUserAndAccessTask(userId, taskId) {
         // check user
         const userById = await userDataAccess.getUserById(userId);

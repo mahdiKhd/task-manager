@@ -80,7 +80,8 @@ function taskExpress(app){
     app.get("/v1/task/allTasks/:page/:limit", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
-            const tasks = await TaskHandler.getAllTask(userId);
+            const {page, limit} = req.params;
+            const tasks = await TaskHandler.getAllTasks(userId, page, limit);
             res.json({
                 result: "OK",
                 tasks,

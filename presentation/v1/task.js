@@ -24,7 +24,7 @@ function taskExpress(app){
     app.post("/v1/task/editTask/:taskId", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
-            const {taskId} = req.param;
+            const {taskId} = req.params;
             const {name, description} = req.body;
             const message = await TaskHandler.editTask(userId, taskId, name, description);
             res.json({

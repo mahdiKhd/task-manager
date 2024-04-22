@@ -1,3 +1,4 @@
+
 const userDataAccess = require("../dataaccess/mySQL/user");
 const taskDataAccess = require("../dataaccess/mySQL/task");
 const errorCodes = require("../config/errorCode");
@@ -48,7 +49,7 @@ class Task {
             message += await taskDataAccess.editTaskName(taskId, name);
         }
         if (description){
-            message += await taskDataAccess.editTaskDescription(userId, description);
+            message += await taskDataAccess.editTaskDescription(taskId, description);
         }
         return message;
     }

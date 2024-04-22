@@ -1,6 +1,5 @@
 const userDataAccess = require("../dataaccess/mySQL/user");
 const errorCodes = require("../config/errorCode");
-const e = require("express");
 
 
 class UserProfile {

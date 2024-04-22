@@ -36,6 +36,26 @@ class UserProfile {
         return message;
     }
 
+    static async changePassword(userId, oldPassword, newPassword) {
+        // check user
+        const userById = await userDataAccess.getUserById(userId);
+        if (!userById) {
+            const error = new Error();
+            error.message = errorCodes.INVALID_OPS;
+            throw error;
+        }
+
+        // check old password
+        if (userById.password !== oldPassword) {
+            const error = new Error();
+            error.message = errorCodes.INVALID_PASSWORD;
+            throw error;
+        }
+
+        // change password
+        return await userDataAccess.changePassword(userId, newPassword);
+    }
+
 }
 
 module.exports = UserProfile;

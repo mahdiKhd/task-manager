@@ -25,10 +25,11 @@ function userProfileExpress(app){
     app.post("/v1/user/userProfile/changePassword", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
-
-            const users = await UserHandler.changePassword();
+            const {oldPassword, newPassword} = req.body;
+            const message = await UserHandler.changePassword(userId, oldPassword, newPassword);
             res.json({
                 result: "OK",
+                message,
             })
         } catch (error) {
             res.json({

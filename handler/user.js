@@ -58,8 +58,10 @@ class UserHandler {
         return await userProfileDomain.editProfile(userId, param);
     }
 
-    static async changePassword() {
+    static async changePassword(userId, oldPassword, newPassword) {
+        Validation.passwordValidation(newPassword);
 
+        return await userProfileDomain.changePassword(userId, oldPassword, newPassword);
     }
 
     static async uploadProfilePhoto() {

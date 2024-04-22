@@ -20,6 +20,30 @@ class Task {
     }
 
     static async editTask(userId, taskId, name, description) {
+
+        await this.checkUserAndAccessTask(userId, taskId);
+
+        // edit task
+        let message = ''
+        if (name){
+            message += await taskDataAccess.editTaskName(taskId, name);
+        }
+        if (description){
+            message += await taskDataAccess.editTaskDescription(taskId, description);
+        }
+        return message;
+    }
+
+    static async deleteTask(userId, taskId) {
+
+        await this.checkUserAndAccessTask(userId, taskId);
+        // delete task
+        return await taskDataAccess.deleteTask(taskId);
+    }
+
+
+
+    static async checkUserAndAccessTask(userId, taskId) {
         // check user
         const userById = await userDataAccess.getUserById(userId);
         if (!userById) {
@@ -42,16 +66,6 @@ class Task {
             error.message = errorCodes.ACCESS_DENIED;
             throw error;
         }
-
-        // edit task
-        let message = ''
-        if (name){
-            message += await taskDataAccess.editTaskName(taskId, name);
-        }
-        if (description){
-            message += await taskDataAccess.editTaskDescription(taskId, description);
-        }
-        return message;
     }
 
 

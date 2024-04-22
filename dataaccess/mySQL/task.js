@@ -1,4 +1,4 @@
-const {promisePool} = require('../../util/DB/mysql');
+const {promisePool} = require("../../util/DB/mysql");
 const errorCodes = require("../../config/errorCode");
 
 
@@ -54,6 +54,23 @@ class TaskDataAccess {
 
             if (result.affectedRows > 0) {
                 return `task description updated successfully. `;
+            } else {
+                const error = new Error();
+                error.message = errorCodes.INVALID_OPS;
+                throw error;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async deleteTask(taskId){
+        const sql = "DELETE FROM tasks WHERE task_id = ?";
+        try {
+            const [result] = await promisePool.query(sql, [taskId]);
+
+            if (result.affectedRows > 0) {
+                return `task deleted successfully. `;
             } else {
                 const error = new Error();
                 error.message = errorCodes.INVALID_OPS;

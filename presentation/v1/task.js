@@ -43,7 +43,7 @@ function taskExpress(app){
     app.delete("/v1/task/deleteTask/:taskId", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
-            const {taskId} = req.param;
+            const {taskId} = req.params;
             const message = await TaskHandler.deleteTask(userId, taskId);
             res.json({
                 result: "OK",
@@ -60,7 +60,7 @@ function taskExpress(app){
     app.get("/v1/task/:taskId", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
-            const taskId = req.param;
+            const taskId = req.params;
             const task = await TaskHandler.getTask(userId, taskId);
             // todo DTO
             res.json({

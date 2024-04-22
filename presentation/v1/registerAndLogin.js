@@ -9,7 +9,6 @@ function registerAndLoginExpress(app){
         try{
             const {email, phoneNumber, username, password} = req.body;
             const message = await UserHandler.registerUser(email, phoneNumber, username, password);
-            console.log(message)
             res.json({
                 result: "OK",
                 message,

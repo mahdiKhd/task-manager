@@ -39,8 +39,14 @@ class Validation {
         }
     }
 
-
-
+    static taskNameValidation(name) {
+        const taskNameRegex = /^[a-zA-Z0-9\s\-_]{3,50}$/;
+        if (!name.match(taskNameRegex)) {
+            const error = new Error();
+            error.message = errorCodes.INVALID_TASK_NAME;
+            throw error;
+        }
+    }
 }
 
 module.exports = Validation;

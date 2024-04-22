@@ -5,4 +5,5 @@ module.exports = {
     INVALID_PASSWORD: 'رمز عبور نا معتبر است',
     INVALID_OPS: 'عملیات اشتباه است',
     USER_EXISTS: 'کاربر با این مشخصات وجود دارد',
+    INVALID_LOGIN: 'ورود نا معتبر',
 }

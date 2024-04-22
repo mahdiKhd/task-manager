@@ -8,11 +8,11 @@ class UserDataAccess {
             const results = await promisePool.query(query, [id]);
 
             console.log(results)
-            if (results.length === 0) {
+            if (results[0].length === 0) {
                 return null; // User not found
             }
 
-            return results[0];
+            return results[0][0];
         } catch (error) {
             throw error;
         }
@@ -26,7 +26,7 @@ class UserDataAccess {
                 return null; // User not found
             }
 
-            return results[0];
+            return results[0][0];
         } catch (error) {
             throw error;
         }
@@ -40,7 +40,7 @@ class UserDataAccess {
                 return null; // User not found
             }
 
-            return results[0];
+            return results[0][0];
         } catch (error) {
             throw error;
         }
@@ -55,7 +55,7 @@ class UserDataAccess {
                 return null; // User not found
             }
 
-            return results[0];
+            return results[0][0];
         } catch (error) {
             throw error;
         }

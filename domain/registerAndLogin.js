@@ -1,6 +1,8 @@
 const userDataAccess = require('../dataaccess/mySQL/user');
 
 const errorCodes = require('../config/errorCode');
+const jwt = require('jsonwebtoken');
+const {TOKEN_KEY} = process.env;
 
 
 class RegisterAndLogin {
@@ -29,10 +31,42 @@ class RegisterAndLogin {
 
     static async loginUser(username, password) {
         // check is there any user with thus username
+        const userByUsername = await userDataAccess.getUserByUsername(username);
+
+        if (!userByUsername) {
+            const error = new Error();
+            error.message = errorCodes.INVALID_LOGIN;
+            throw error;
+        }
 
         // check password
+        if (userByUsername.password !== password) {
+            const error = new Error();
+            error.message = errorCodes.INVALID_LOGIN;
+            throw error;
+        }
 
         // return token
+        const {refreshToken, accessToken} = this.createUserAuthenticationToken(userByUsername);
+        return {refreshToken, accessToken};
+    }
+
+    static createUserAuthenticationToken(user) {
+        const accessToken = jwt.sign(
+            {userId: user.user_id},
+            TOKEN_KEY,
+            {
+                expiresIn: "2h"
+            }
+        );
+        const refreshToken = jwt.sign(
+            {userId: user.user_id},
+            TOKEN_KEY,
+            {
+                expiresIn: "365d",
+            }
+        );
+        return {refreshToken, accessToken};
     }
 }
 

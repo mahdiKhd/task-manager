@@ -1,8 +1,8 @@
 const expressInitialization = require('./presentation/root');
-const {initializeMongo} = require('./util/DB/mysql');
+const {testDBConnection} = require('./util/DB/mysql');
 
 async function main() {
-    await initializeMongo();
+    testDBConnection();
     expressInitialization();
 }
 

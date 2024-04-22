@@ -16,7 +16,7 @@ class UserHandler {
         Validation.usernameValidation(username);
         Validation.passwordValidation(password);
 
-        await registerAndLoginDomain.registerUser(email, phoneNumber, username, password);
+        return await registerAndLoginDomain.registerUser(email, phoneNumber, username, password);
     }
 
     static async loginUser(username, password) {
@@ -24,13 +24,11 @@ class UserHandler {
         Validation.usernameValidation(username);
         Validation.passwordValidation(password);
 
-        const token = await registerAndLoginDomain.loginUser(username, password);
-        return token;
+        return await registerAndLoginDomain.loginUser(username, password);
     }
 
     // manage users
     static async getAllUsers() {
-        const allUsers = await manageUsersDomain.getAllUsers();
     }
 
     static async editAllUsers() {

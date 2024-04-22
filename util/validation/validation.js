@@ -13,8 +13,8 @@ class Validation {
     }
 
     static phoneNumberValidation (phoneNumber) {
-        const phoneRegex = /^09\d{8}$/;
-        if (!phoneRegex.match(phoneNumber)) {
+        const phoneRegex = /^09\d{9}$/;
+        if (!phoneNumber.match(phoneRegex)) {
             const error = new Error();
             error.message = errorCodes.INVALID_PHONE_NUMBER;
             throw error;
@@ -23,7 +23,7 @@ class Validation {
 
     static usernameValidation (username) {
         const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_]*$/;
-        if (!username.match(username)) {
+        if (!username.match(usernameRegex)) {
             const error = new Error();
             error.message = errorCodes.INVALID_USERNAME;
             throw error;
@@ -32,7 +32,7 @@ class Validation {
 
     static passwordValidation(password) {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-        if (!passwordRegex.match(password)) {
+        if (!password.match(passwordRegex)) {
             const error = new Error();
             error.message = errorCodes.INVALID_PASSWORD;
             throw error;

@@ -10,6 +10,7 @@ const mysqlConfig = {
     user: mysqlUser,
     password: mysqlPassword,
     database: mysqlDatabase,
+    waitForConnections: true,
 };
 
 function testDBConnection() {
@@ -26,5 +27,6 @@ function testDBConnection() {
 }
 
 const pool = mysql.createPool(mysqlConfig);
+const promisePool = pool.promise();
 
-module.exports = {pool, testDBConnection};
+module.exports = {promisePool, testDBConnection};

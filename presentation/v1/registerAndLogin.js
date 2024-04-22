@@ -8,9 +8,11 @@ function registerAndLoginExpress(app){
     app.post("/v1/user/registerAndLogin/register", async function(req,res){
         try{
             const {email, phoneNumber, username, password} = req.body;
-            await UserHandler.registerUser(email, phoneNumber, username, password);
+            const message = await UserHandler.registerUser(email, phoneNumber, username, password);
+            console.log(message)
             res.json({
                 result: "OK",
+                message,
             })
         } catch (error){
             res.json({

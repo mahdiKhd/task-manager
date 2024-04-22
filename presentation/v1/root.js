@@ -1,5 +1,12 @@
-userExpress = require('./user');
+manageUsersExpress = require('./manageUsers');
+registerAndLoginExpress = require('./registerAndLogin');
+taskExpress = require('./task');
+userProfileExpress = require('./userProfile');
+
 function initializeServerV1(app) {
-    userExpress(app);
+    manageUsersExpress(app);
+    registerAndLoginExpress(app);
+    taskExpress(app);
+    userProfileExpress(app);
 }
 module.exports = initializeServerV1;

@@ -124,6 +124,42 @@ class UserDataAccess {
             throw error;
         }
     }
+
+    static async editProfileEmail(userId, email){
+        const sql = "UPDATE users SET email = ? WHERE user_id = ?;";
+
+        try {
+            const [result] = await promisePool.query(sql, [email, userId]);
+
+            if (result.affectedRows > 0) {
+                return `email updated successfully. `;
+            } else {
+                const error = new Error();
+                error.message = errorCodes.INVALID_OPS;
+                throw error;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async editProfilePhoneNumber(userId, phoneNumber){
+        const sql = "UPDATE users SET phone_number = ? WHERE user_id = ?;";
+
+        try {
+            const [result] = await promisePool.query(sql, [phoneNumber, userId]);
+
+            if (result.affectedRows > 0) {
+                return `phone number updated successfully. `;
+            } else {
+                const error = new Error();
+                error.message = errorCodes.INVALID_OPS;
+                throw error;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = UserDataAccess;

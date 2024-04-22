@@ -8,9 +8,10 @@ function userProfileExpress(app){
         try {
             const userId = req.user.userId;
             const {phoneNumber, email} = req.body;
-            const users = await UserHandler.editProfile({phoneNumber, email});
+            const message = await UserHandler.editProfile(userId, {phoneNumber, email});
             res.json({
                 result: "OK",
+                message,
             })
         } catch (error) {
             res.json({

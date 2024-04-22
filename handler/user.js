@@ -46,8 +46,16 @@ class UserHandler {
 
     // profile
 
-    static async editProfile(param) {
-
+    static async editProfile(userId, param) {
+        const email = param.email;
+        const phoneNumber = param.phoneNumber;
+        if (email) {
+            Validation.emailValidation(email);
+        }
+        if (phoneNumber) {
+            Validation.phoneNumberValidation(phoneNumber);
+        }
+        return await userProfileDomain.editProfile(userId, param);
     }
 
     static async changePassword() {

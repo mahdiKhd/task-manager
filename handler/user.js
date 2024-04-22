@@ -40,8 +40,8 @@ class UserHandler {
         return await manageUsersDomain.deleteUser(userId, username);
     }
 
-    static async assignRole(userId, userId2, role) {
-
+    static async assignRoleAdmin(userId, username) {
+        return await manageUsersDomain.assignRoleAdmin(userId, username);
     }
 
     // profile

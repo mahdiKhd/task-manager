@@ -58,13 +58,14 @@ function manageUsersExpress(app){
     });
 
     // assign role (admin only)
-    app.post("/v1/user/manageUsers/assignRole", verifyToken, async function (req, res) {
+    app.post("/v1/user/manageUsers/assignRoleAdmin", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
-            const {username, role} = req.body;
-            await UserHandler.assignRole(userId, username, role);
+            const {username} = req.body;
+            const message = await UserHandler.assignRoleAdmin(userId, username);
             res.json({
                 result: "OK",
+                message,
             });
         } catch (error) {
             res.json({

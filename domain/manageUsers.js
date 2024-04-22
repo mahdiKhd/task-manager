@@ -20,6 +20,22 @@ class ManageUsers {
         return await userDataAccess.deleteUser(username);
     }
 
+    static async assignRoleAdmin(userId, username){
+        // check access
+        await this.checkAdminAccessibility(userId);
+
+        // check user role
+        const userByUsername = await userDataAccess.getUserByUsername(username);
+        if (!userByUsername || userByUsername.role === 'admin') {
+            const error = new Error();
+            error.message = errorCodes.INVALID_OPS;
+            throw error;
+        }
+
+        // assign role
+        return await userDataAccess.assignAdmin(username);
+    }
+
     static async checkAdminAccessibility(userId){
         // get user by id and check role
         const userById = await userDataAccess.getUserById(userId);

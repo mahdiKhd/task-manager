@@ -13,10 +13,10 @@ class TaskDataAccess {
         }
     }
 
-    static async getTaskById(id){
+    static async getTaskById(taskId){
         try {
             const query = 'SELECT * FROM tasks WHERE task_id = ?';
-            const results = await promisePool.query(query, [id]);
+            const results = await promisePool.query(query, [taskId]);
 
             if (results[0].length === 0) {
                 return null; // User not found

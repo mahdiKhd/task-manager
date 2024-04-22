@@ -56,11 +56,12 @@ function taskExpress(app){
             });
         }
     });
+
     // get task
     app.get("/v1/task/:taskId", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
-            const taskId = req.params;
+            const {taskId} = req.params;
             const task = await TaskHandler.getTask(userId, taskId);
             // todo DTO
             res.json({
@@ -76,7 +77,7 @@ function taskExpress(app){
     });
 
     // get all tasks
-    app.get("/v1/task/allTasks", verifyToken, async function (req, res) {
+    app.get("/v1/task/allTasks/:page/:limit", verifyToken, async function (req, res) {
         try {
             const userId = req.user.userId;
             const tasks = await TaskHandler.getAllTask(userId);

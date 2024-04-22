@@ -37,11 +37,17 @@ class Task {
     static async deleteTask(userId, taskId) {
 
         await this.checkUserAndAccessTask(userId, taskId);
+
         // delete task
         return await taskDataAccess.deleteTask(taskId);
     }
 
+    static async getTask(userId, taskId) {
+        await this.checkUserAndAccessTask(userId, taskId);
 
+        // get task
+        return await taskDataAccess.getTaskById(taskId);
+    }
 
     static async checkUserAndAccessTask(userId, taskId) {
         // check user

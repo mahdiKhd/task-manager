@@ -20,8 +20,8 @@ class TaskHandler {
         return await taskDomain.deleteTask(userId, taskId);
     }
 
-    static async getTask(userId, taskId, name, description) {
-
+    static async getTask(userId, taskId) {
+        return await taskDomain.getTask(userId, taskId);
     }
 
     static async getAllTask(userId) {

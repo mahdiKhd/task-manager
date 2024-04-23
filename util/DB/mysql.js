@@ -22,7 +22,7 @@ function testDBConnection() {
             return;
         }
         console.log('Connected to MySQL server');
-        connection.end(); // Close the connection after successful test
+        connection.end();
     });
 }
 

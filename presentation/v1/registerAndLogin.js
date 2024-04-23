@@ -6,6 +6,7 @@ function registerAndLoginExpress(app){
 
     // sign up
     app.post("/v1/user/registerAndLogin/register", async function(req,res){
+        console.log('e')
         try{
             const {email, phoneNumber, username, password} = req.body;
             const message = await UserHandler.registerUser(email, phoneNumber, username, password);

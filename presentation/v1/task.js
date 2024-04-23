@@ -1,5 +1,6 @@
 const {TaskHandler} = require('../../handler/task');
 const verifyToken = require('../middleware/jwtAuthentication');
+const {taskToDto, tasksToDto} = require('./DTO/task');
 
 
 function taskExpress(app){
@@ -63,10 +64,10 @@ function taskExpress(app){
             const userId = req.user.userId;
             const {taskId} = req.params;
             const task = await TaskHandler.getTask(userId, taskId);
-            // todo DTO
+            const presentTask = taskToDto(task);
             res.json({
                 result: "OK",
-                task,
+                task: presentTask,
             });
         } catch (error) {
             res.json({
@@ -82,9 +83,10 @@ function taskExpress(app){
             const userId = req.user.userId;
             const {page, limit} = req.params;
             const tasks = await TaskHandler.getAllTasks(userId, page, limit);
+            const presentTasks = tasksToDto(tasks);
             res.json({
                 result: "OK",
-                tasks,
+                tasks: presentTasks,
             });
         } catch (error) {
             res.json({

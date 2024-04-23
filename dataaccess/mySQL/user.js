@@ -7,11 +7,9 @@ class UserDataAccess {
         try {
             const query = 'SELECT * FROM users WHERE user_id = ?';
             const results = await promisePool.query(query, [id]);
-
             if (results[0].length === 0) {
-                return null; // User not found
+                return null;
             }
-
             return results[0][0];
         } catch (error) {
             throw error;
@@ -23,9 +21,8 @@ class UserDataAccess {
             const query = 'SELECT * FROM users WHERE username = ?';
             const results = await promisePool.query(query, [username]);
             if (results[0].length === 0) {
-                return null; // User not found
+                return null;
             }
-
             return results[0][0];
         } catch (error) {
             throw error;
@@ -37,9 +34,8 @@ class UserDataAccess {
             const query = 'SELECT * FROM users WHERE email = ?';
             const results = await promisePool.query(query, [email]);
             if (results[0].length === 0) {
-                return null; // User not found
+                return null;
             }
-
             return results[0][0];
         } catch (error) {
             throw error;
@@ -50,11 +46,9 @@ class UserDataAccess {
         try {
             const query = 'SELECT * FROM users WHERE phone_number = ?';
             const results = await promisePool.query(query, [phoneNumber]);
-
             if (results[0].length === 0) {
-                return null; // User not found
+                return null;
             }
-
             return results[0][0];
         } catch (error) {
             throw error;
@@ -62,9 +56,9 @@ class UserDataAccess {
     }
 
     static async insertNewUser(email, phoneNumber, username, password){
-        const sql = "INSERT INTO users (email, phone_number, username, password, role) VALUES (?, ?, ?, ?, ?);";
+        const sql = "INSERT INTO users (email, phone_number, username, password, role, created_at, last_modified_at, profile_photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         try {
-            await promisePool.execute(sql, [email, phoneNumber, username, password, 'user']);
+            await promisePool.execute(sql, [email, phoneNumber, username, password, 'user', new Date(), new Date(), null]);
         } catch (error) {
             throw error;
         }
@@ -75,11 +69,9 @@ class UserDataAccess {
         limit = parseInt(limit, 10);
         const offset = (page - 1) * limit;
 
-        // SQL query to get users with limit and offset
         const sql = "SELECT user_id, email, phone_number, username, role FROM users ORDER BY username ASC LIMIT ? OFFSET ?;";
 
         try {
-            // Use pool to execute the query
             const [users] = await promisePool.query(sql, [limit, offset]);
             return users;
         } catch (error) {
@@ -106,13 +98,11 @@ class UserDataAccess {
     }
 
     static async assignAdmin(username){
-        const sql = "UPDATE users SET role = 'admin' WHERE username = ?;";
+        const sql = "UPDATE users SET role = 'admin', last_modified_at = NOW() WHERE username = ?;";
 
         try {
-            // Execute the query to assign the admin role to the user with the provided username
             const [result] = await promisePool.query(sql, [username]);
 
-            // Check if any rows were affected (user found and role updated)
             if (result.affectedRows > 0) {
                 return `Admin role assigned to user '${username}' successfully`;
             } else {
@@ -126,7 +116,7 @@ class UserDataAccess {
     }
 
     static async editProfileEmail(userId, email){
-        const sql = "UPDATE users SET email = ? WHERE user_id = ?;";
+        const sql = "UPDATE users SET email = ?, last_modified_at = NOW() WHERE user_id = ?;";
 
         try {
             const [result] = await promisePool.query(sql, [email, userId]);
@@ -144,7 +134,7 @@ class UserDataAccess {
     }
 
     static async editProfilePhoneNumber(userId, phoneNumber){
-        const sql = "UPDATE users SET phone_number = ? WHERE user_id = ?;";
+        const sql = "UPDATE users SET phone_number = ?, last_modified_at = NOW() WHERE user_id = ?;";
 
         try {
             const [result] = await promisePool.query(sql, [phoneNumber, userId]);
@@ -162,7 +152,7 @@ class UserDataAccess {
     }
 
     static async changePassword(userId, password){
-        const sql = "UPDATE users SET password = ? WHERE user_id = ?;";
+        const sql = "UPDATE users SET password = ?, last_modified_at = NOW() WHERE user_id = ?;";
 
         try {
             const [result] = await promisePool.query(sql, [password, userId]);
@@ -179,5 +169,4 @@ class UserDataAccess {
         }
     }
 }
-
 module.exports = UserDataAccess;

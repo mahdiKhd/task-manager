@@ -1,6 +1,6 @@
 const {UserHandler} = require('../../handler/user');
 const verifyToken = require('../middleware/jwtAuthentication');
-
+const {userToDto, usersToDto} = require('DTO/user');
 
 function manageUsersExpress(app){
 
@@ -10,10 +10,10 @@ function manageUsersExpress(app){
             const userId = req.user.userId;
             const {page, limit} = req.params;
             const users = await UserHandler.getAllUsers(userId, page, limit);
-            // todo add DTO
+            const presentUsers = usersToDto(users);
             res.json({
                 result: "OK",
-                users,
+                users: presentUsers,
             });
         } catch (error) {
             res.json({

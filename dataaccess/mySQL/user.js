@@ -56,9 +56,9 @@ class UserDataAccess {
     }
 
     static async insertNewUser(email, phoneNumber, username, password){
-        const sql = "INSERT INTO users (email, phone_number, username, password, role) VALUES (?, ?, ?, ?, ?);";
+        const sql = "INSERT INTO users (email, phone_number, username, password, role, created_at, last_modified_at, profile_photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         try {
-            await promisePool.execute(sql, [email, phoneNumber, username, password, 'user']);
+            await promisePool.execute(sql, [email, phoneNumber, username, password, 'user', new Date(), new Date(), null]);
         } catch (error) {
             throw error;
         }
@@ -98,7 +98,7 @@ class UserDataAccess {
     }
 
     static async assignAdmin(username){
-        const sql = "UPDATE users SET role = 'admin' WHERE username = ?;";
+        const sql = "UPDATE users SET role = 'admin', last_modified_at = NOW() WHERE username = ?;";
 
         try {
             const [result] = await promisePool.query(sql, [username]);
@@ -116,7 +116,7 @@ class UserDataAccess {
     }
 
     static async editProfileEmail(userId, email){
-        const sql = "UPDATE users SET email = ? WHERE user_id = ?;";
+        const sql = "UPDATE users SET email = ?, last_modified_at = NOW() WHERE user_id = ?;";
 
         try {
             const [result] = await promisePool.query(sql, [email, userId]);
@@ -134,7 +134,7 @@ class UserDataAccess {
     }
 
     static async editProfilePhoneNumber(userId, phoneNumber){
-        const sql = "UPDATE users SET phone_number = ? WHERE user_id = ?;";
+        const sql = "UPDATE users SET phone_number = ?, last_modified_at = NOW() WHERE user_id = ?;";
 
         try {
             const [result] = await promisePool.query(sql, [phoneNumber, userId]);
@@ -152,7 +152,7 @@ class UserDataAccess {
     }
 
     static async changePassword(userId, password){
-        const sql = "UPDATE users SET password = ? WHERE user_id = ?;";
+        const sql = "UPDATE users SET password = ?, last_modified_at = NOW() WHERE user_id = ?;";
 
         try {
             const [result] = await promisePool.query(sql, [password, userId]);

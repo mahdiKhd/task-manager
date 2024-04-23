@@ -4,9 +4,9 @@ const errorCodes = require("../../config/errorCode");
 
 class TaskDataAccess {
     static async insertNewTask(userId, name, description) {
-        const sql = "INSERT INTO tasks (name, description, user_id) VALUES (?, ?, ?);";
+        const sql = "INSERT INTO tasks (name, description, user_id, created_at, last_modified_at, attachment) VALUES (?, ?, ?, ?, ?, ?);";
         try {
-            await promisePool.execute(sql, [name, description, userId]);
+            await promisePool.execute(sql, [name, description, userId, new Date(), new Date(), null]);
             return 'task added successfully.';
         } catch (error) {
             throw error;
@@ -41,7 +41,7 @@ class TaskDataAccess {
     }
 
     static async editTaskName(taskId, name){
-        const sql = "UPDATE tasks SET name = ? WHERE task_id = ?;";
+        const sql = "UPDATE tasks SET name = ?, last_modified_at = NOW() WHERE task_id = ?;";
         try {
             const [result] = await promisePool.query(sql, [name, taskId]);
             if (result.affectedRows > 0) {
@@ -57,7 +57,7 @@ class TaskDataAccess {
     }
 
     static async editTaskDescription(taskId, description){
-        const sql = "UPDATE tasks SET description = ? WHERE task_id = ?;";
+        const sql = "UPDATE tasks SET description = ?, last_modified_at = NOW() WHERE task_id = ?;";
         try {
             const [result] = await promisePool.query(sql, [description, taskId]);
             if (result.affectedRows > 0) {

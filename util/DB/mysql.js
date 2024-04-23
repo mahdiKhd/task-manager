@@ -30,29 +30,26 @@ async function testDBConnection() {
                 connection.query(`
         CREATE TABLE users (
           user_id INT AUTO_INCREMENT PRIMARY KEY,
-          username VARCHAR(255) UNIQUE,
-          email VARCHAR(255) UNIQUE,
-          phone_number VARCHAR(20) UNIQUE,
+          username VARCHAR(255) UNIQUE NOT NULL,
+          password VARCHAR(255) NOT NULL, 
+          email VARCHAR(255) UNIQUE NOT NULL,
+          phone_number VARCHAR(20) UNIQUE NOT NULL,
           role ENUM('admin', 'user'),
-          signup_date DATE,
-          last_modified_email DATETIME,
-          last_modified_phone_number DATETIME,
-          last_modified_username DATETIME,
+          created_at DATETIME,
+          last_modified_at DATETIME,
           profile_photo BLOB
         )`, (err) => {
                     if (err) throw err;
                     console.log("Users table created");
                     // create first admin
-                    // Create initial admin user
                     const initialAdmin = {
                         username: 'admin',
                         email: 'admin@example.com',
                         phone_number: '1234567890',
+                        password: 'Admin1234',
                         role: 'admin',
-                        signup_date: new Date(),
-                        last_modified_email: new Date(),
-                        last_modified_phone_number: new Date(),
-                        last_modified_username: new Date()
+                        created_at: new Date(),
+                        last_modified_at: new Date(),
                     };
 
                     connection.query(`INSERT INTO users SET ?`, initialAdmin, (err, result) => {
@@ -74,7 +71,9 @@ async function testDBConnection() {
           description TEXT,
           user_id INT,
           attachment BLOB,
-          FOREIGN KEY (user_id) REFERENCES users(user_id)
+          created_at DATETIME,
+          last_modified_at DATETIME,
+          FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
         )`, (err) => {
                     if (err) throw err;
                     console.log("Tasks table created");

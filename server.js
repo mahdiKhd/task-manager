@@ -2,7 +2,7 @@ const expressInitialization = require('./presentation/root');
 const {testDBConnection} = require('./util/DB/mysql');
 
 async function main() {
-    testDBConnection();
+    await testDBConnection();
     expressInitialization();
 }
 

@@ -1,6 +1,6 @@
 const {UserHandler} = require('../../handler/user');
 const verifyToken = require('../middleware/jwtAuthentication');
-const {userToDto, usersToDto} = require('DTO/user');
+const {userToDto, usersToDto} = require('./DTO/user');
 
 function manageUsersExpress(app){
 

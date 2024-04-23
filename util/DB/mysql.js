@@ -67,7 +67,7 @@ async function testDBConnection() {
                 connection.query(`
         CREATE TABLE tasks (
           task_id INT AUTO_INCREMENT PRIMARY KEY,
-          title VARCHAR(255),
+          name VARCHAR(255),
           description TEXT,
           user_id INT,
           attachment BLOB,

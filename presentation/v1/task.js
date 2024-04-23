@@ -1,6 +1,6 @@
 const {TaskHandler} = require('../../handler/task');
 const verifyToken = require('../middleware/jwtAuthentication');
-const {taskToDto, tasksToDto} = require('DTO/task');
+const {taskToDto, tasksToDto} = require('./DTO/task');
 
 
 function taskExpress(app){

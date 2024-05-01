@@ -2,7 +2,7 @@
 a simple task manager
 # Server Setup Guide
 
-This README provides detailed instructions on how to set up and run the server for this project. The server relies on a MySQL database and specific environment settings defined in a `.env` file.
+This README provides detailed instructions on how to set up and run the server for this project. The server relies on a MySQL database and specific environment settings defined in a `.env ` file.
 
 ## Prerequisites
 
@@ -20,7 +20,7 @@ Follow these steps carefully to ensure a successful setup of the server environm
 Before launching the server, create the MySQL database:
 1. Log into your MySQL environment (using MySQL Workbench, command line, or another tool).
 2. Execute the following SQL command to create a new database:
-   ```sql
+   ```sql 
    CREATE DATABASE taskmanager;
 3. Ensure the MySQL server is running.
 

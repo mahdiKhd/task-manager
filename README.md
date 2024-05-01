@@ -2,7 +2,7 @@
 a simple task manager
 # Server Setup Guide
 
-This README provides detailed instructions on how to set up and run the server for this project. The server relies on a MySQL database and specific environment settings defined in a `.env` file.
+This README provides detailed instructions on how to set up and run the server for this project. The server relies on a MySQL database and specific environment settings defined in a `.env ` file.
 
 ## Prerequisites
 
